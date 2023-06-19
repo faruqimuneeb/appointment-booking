@@ -4,7 +4,7 @@ namespace Database\Factories;
 
 use Illuminate\Database\Eloquent\Factories\Factory;
 use App\Models\Service;
-use App\Models\ServiceHours;
+use App\Models\ServiceHour;
 
 
 class ServiceHourFactory extends Factory
@@ -14,28 +14,16 @@ class ServiceHourFactory extends Factory
      *
      * @return array
      */
-    protected $model = ServiceHours::class;
+    protected $model = ServiceHour::class;
     public function definition()
     {
-        // Retrieve the service IDs available in the database
-        $serviceIds = Service::pluck('id')->all();
-
-        // Get a random service ID
-        $serviceId = $this->faker->randomElement($serviceIds);
-
-        // Generate opening and closing hours for each weekday
-        $serviceHours = [];
-        $weekdays = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday'];
-        
-        foreach ($weekdays as $weekday) {
-            $serviceHours[] = [
-                'service_id' => $serviceId,
-                'day_of_week' => $weekday,
-                'opening_time' => $weekday=="Sunday" ? null: $this->faker->time('H:i:s'),
-                'closing_time' => $weekday=="Sunday" ? null: $this->faker->time('H:i:s'),
-            ];
-        }
-
-        return $serviceHours;
+        return [
+            'service_id' => function () {
+                return Service::factory()->create()->id;
+            },
+            'day_of_week' => $this->faker->dayOfWeek(),
+            'opening_time' => $this->faker->time('H_i_s'),
+            'closing_time' => $this->faker->time('H_i_s')
+        ];
     }
 }

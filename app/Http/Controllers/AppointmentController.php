@@ -38,6 +38,8 @@ class AppointmentController extends Controller
             return response()->json(['message' => 'Slot is not available for booking'], 400);
         }
         $service = $slot->service;
+        // print_r($service);
+        // exit();
         $day = Carbon::parse($slot->date);
         //check if slot does not starts before opening hours...
         $serviceHours = $service->serviceHours()->where('service_id', $service->id)
