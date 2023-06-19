@@ -8,6 +8,7 @@ use Tests\TestCase;
 use App\Models\User;
 use App\Models\Service;
 use App\Models\ServiceHour;
+use App\Models\ServiceBreak;
 use App\Models\Slot;
 use App\Models\Appointment;
 
@@ -105,8 +106,116 @@ class BookAppointmentTest extends TestCase
             'end_time' => now()->setHour(9)->setMinute(05)->setSecond(0),
             'is_bookable' => true
         ]);
-        // print_r($menHaircutSlot);
-        // exit();
+        
+        //Break Times...
+        ServiceBreak::factory()->create([
+            'day_of_week' => 'Sunday',
+            'service_id' => $menHaircutService->id,
+            'name' => 'Lunch Break',
+            'start_time' => '12:00:00',
+            'end_time' => '13:00:00',
+        ]);
+        ServiceBreak::factory()->create([
+            'day_of_week' => 'Monday',
+            'service_id' => $menHaircutService->id,
+            'name' => 'Lunch Break',
+            'start_time' => '12:00:00',
+            'end_time' => '13:00:00',
+        ]);
+        ServiceBreak::factory()->create([
+            'day_of_week' => 'Tuesday',
+            'service_id' => $menHaircutService->id,
+            'name' => 'Lunch Break',
+            'start_time' => '12:00:00',
+            'end_time' => '13:00:00',
+        ]);
+        ServiceBreak::factory()->create([
+            'day_of_week' => 'Wednesday',
+            'service_id' => $menHaircutService->id,
+            'name' => 'Lunch Break',
+            'start_time' => '12:00:00',
+            'end_time' => '13:00:00',
+        ]);
+        ServiceBreak::factory()->create([
+            'day_of_week' => 'Thursday',
+            'service_id' => $menHaircutService->id,
+            'name' => 'Lunch Break',
+            'start_time' => '12:00:00',
+            'end_time' => '13:00:00',
+        ]);
+        ServiceBreak::factory()->create([
+            'day_of_week' => 'Friday',
+            'service_id' => $menHaircutService->id,
+            'name' => 'Lunch Break',
+            'start_time' => '12:00:00',
+            'end_time' => '13:00:00',
+        ]);
+        ServiceBreak::factory()->create([
+            'day_of_week' => 'Saturday',
+            'service_id' => $menHaircutService->id,
+            'name' => 'Lunch Break',
+            'start_time' => '12:00:00',
+            'end_time' => '13:00:00',
+        ]);
+        //Cleaning Break
+        ServiceBreak::factory()->create([
+            'day_of_week' => 'Sunday',
+            'service_id' => $menHaircutService->id,
+            'name' => 'Cleaning Break',
+            'start_time' => '15:00:00',
+            'end_time' => '16:00:00',
+        ]);
+        ServiceBreak::factory()->create([
+            'day_of_week' => 'Monday',
+            'service_id' => $menHaircutService->id,
+            'name' => 'Cleaning Break',
+            'start_time' => '15:00:00',
+            'end_time' => '16:00:00',
+        ]);
+        ServiceBreak::factory()->create([
+            'day_of_week' => 'Tuesday',
+            'service_id' => $menHaircutService->id,
+            'name' => 'Cleaning Break',
+            'start_time' => '15:00:00',
+            'end_time' => '16:00:00',
+        ]);
+        ServiceBreak::factory()->create([
+            'day_of_week' => 'Wednesday',
+            'service_id' => $menHaircutService->id,
+            'name' => 'Cleaning Break',
+            'start_time' => '15:00:00',
+            'end_time' => '16:00:00',
+        ]);
+        ServiceBreak::factory()->create([
+            'day_of_week' => 'Thursday',
+            'service_id' => $menHaircutService->id,
+            'name' => 'Cleaning Break',
+            'start_time' => '15:00:00',
+            'end_time' => '16:00:00',
+        ]);
+        ServiceBreak::factory()->create([
+            'day_of_week' => 'Friday',
+            'service_id' => $menHaircutService->id,
+            'name' => 'Cleaning Break',
+            'start_time' => '15:00:00',
+            'end_time' => '16:00:00',
+        ]);
+        ServiceBreak::factory()->create([
+            'day_of_week' => 'Saturday',
+            'service_id' => $menHaircutService->id,
+            'name' => 'Cleaning Break',
+            'start_time' => '15:00:00',
+            'end_time' => '16:00:00',
+        ]);
+        // Create a slot for Men Haircut
+        $menHaircutSlot = Slot::factory()->create([
+            'service_id' => $menHaircutService->id,
+            'date' => now()->format('Y-m-d'),
+            'start_time' => now()->setHour(8)->setMinute(30)->setSecond(0),
+            'end_time' => now()->setHour(9)->setMinute(05)->setSecond(0),
+            'is_bookable' => true
+        ]);
+
         // Make an API request to book an appointment for Men Haircut
         $response = $this->postJson('/api/book-appointment', [
             'slot_id' => $menHaircutSlot->id,
